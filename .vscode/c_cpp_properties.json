@@ -1,0 +1,100 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "Win32",
+            "compilerPath": "",
+            "compilerArgs": [],
+            "intelliSenseMode": "windows-msvc-x64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:\\Program Files\\WindowsApps\\ArduinoLLC.ArduinoIDE_1.8.55.0_x86__mdqgnx93n4wtt\\hardware\\tools\\avr\\avr\\include\\avr\\",
+                "C:\\Program Files\\WindowsApps\\ArduinoLLC.ArduinoIDE_1.8.55.0_x86__mdqgnx93n4wtt\\hardware\\**",
+                "C:\\Program Files\\WindowsApps\\ArduinoLLC.ArduinoIDE_1.8.55.0_x86__mdqgnx93n4wtt\\tools\\**",
+                "C:\\Program Files\\WindowsApps\\ArduinoLLC.ArduinoIDE_1.8.55.0_x86__mdqgnx93n4wtt\\**",
+                "C:\\Users\\rmaks\\Documents\\Arduino\\libraries\\**",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\**",
+                "C:\\Program Files\\WindowsApps\\ArduinoLLC.ArduinoIDE_1.8.55.0_x86__mdqgnx93n4wtt\\hardware\\arduino\\avr\\**",
+                "C:\\Program Files\\WindowsApps\\ArduinoLLC.ArduinoIDE_1.8.55.0_x86__mdqgnx93n4wtt\\hardware\\tools\\avr\\avr\\**",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\ESP8266WiFi\\src\\**",
+                "C:\\Users\\rmaks\\.espressif\\**",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\**",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\tests\\host\\common\\**",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\tools\\sdk\\include\\**",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.0.4-gcc10.3-1757bed\\xtensa-lx106-elf\\include\\c++\\10.3.0\\parallel",
+                "C:\\Users\\rmaks\\Documents\\Arduino\\libraries\\ESPAsyncWebServer-master\\src",
+                "C:\\Users\\rmaks\\Documents\\Arduino\\libraries\\Adafruit_GFX_Library"
+            ],
+            "forcedInclude": [],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ]
+        },
+        {
+            "name": "Arduino",
+            "compilerPath": "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\tools\\xtensa-lx106-elf-gcc\\3.0.4-gcc10.3-1757bed\\bin\\xtensa-lx106-elf-g++",
+            "compilerArgs": [
+                "-U__STRICT_ANSI__",
+                "-w",
+                "-Werror=return-type",
+                "-free",
+                "-fipa-pta",
+                "-mlongcalls",
+                "-mtext-section-literals",
+                "-fno-rtti",
+                "-falign-functions=4",
+                "-std=gnu++17"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "includePath": [
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\tools\\sdk\\include",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\tools\\sdk\\lwip2\\include",
+                "c:\\FILES\\DEV\\device projects\\build\\core",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\cores\\esp8266",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\variants\\generic",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\ESP8266WiFi\\src",
+                "C:\\Users\\rmaks\\Documents\\Arduino\\libraries\\ESPAsyncTCP-master\\src",
+                "C:\\Users\\rmaks\\Documents\\Arduino\\libraries\\ESPAsyncWebServer-master\\src",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\Hash\\src",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\ESP8266HTTPClient\\src",
+                "C:\\Users\\rmaks\\Documents\\Arduino\\libraries\\ArduinoJson\\src",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\EEPROM",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\DNSServer\\src",
+                "C:\\Users\\rmaks\\Documents\\Arduino\\libraries\\GyverHX711\\src",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\SPI",
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\libraries\\Wire",
+                "C:\\Users\\rmaks\\Documents\\Arduino\\libraries\\GyverFilters\\src"
+            ],
+            "forcedInclude": [
+                "C:\\Users\\rmaks\\Documents\\ArduinoData\\packages\\esp8266\\hardware\\esp8266\\3.0.2\\cores\\esp8266\\Arduino.h"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "defines": [
+                "__ets__",
+                "ICACHE_FLASH",
+                "_GNU_SOURCE",
+                "MMU_IRAM_SIZE=0x8000",
+                "MMU_ICACHE_SIZE=0x8000",
+                "NONOSDK22x_190703=1",
+                "F_CPU=80000000L",
+                "LWIP_OPEN_SRC",
+                "TCP_MSS=536",
+                "LWIP_FEATURES=1",
+                "LWIP_IPV6=0",
+                "ARDUINO=10819",
+                "ARDUINO_ESP8266_GENERIC",
+                "ARDUINO_ARCH_ESP8266",
+                "ARDUINO_BOARD=\"ESP8266_GENERIC\"",
+                "LED_BUILTIN=2",
+                "FLASHMODE_DOUT",
+                "ESP8266",
+                "USBCON"
+            ]
+        }
+    ]
+}
