@@ -367,15 +367,27 @@ String wificredits(const String &var)
     }
     else
     {
+      // WiFiClient client;
+      // HTTPClient http;
+      // http.begin(client, "http://192.168.77.77:55554/event");
+      // http.addHeader("Content-Type", "application/json");
+      // http.setUserAgent("smart_shelf");
+      // int httpCode = http.POST(messageUpdate);
+      // Serial.println(httpCode);
+      // http.end();
+    }
+  }
+
+  void updateShelfContent(String messageUpdate){    
+    String content = "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + messageUpdate + "]}";
       WiFiClient client;
       HTTPClient http;
       http.begin(client, "http://192.168.77.77:55554/event");
       http.addHeader("Content-Type", "application/json");
       http.setUserAgent("smart_shelf");
-      int httpCode = http.POST(messageUpdate);
+      int httpCode = http.POST(content);
       Serial.println(httpCode);
       http.end();
-    }
   }
 
   void setup()
@@ -857,6 +869,47 @@ String show_Price_Lable(String index){   // hide all lable by index
   return data;
 }
 
+// UPDATE SHELF LABLE
+const String localQrBase = "http://192.168.77.10/shelf_qr/qr_base.png";
+const String localQrTransparent = "http://192.168.77.10/shelf_qr/qr_transperent.png";
+const String localQrOne = "http://192.168.77.10/shelf_qr/update_shelf_1.jpg";
+const String localQrTwo = "http://192.168.77.10/shelf_qr/update_shelf_2.jpg";
+const String localQrThre = "http://192.168.77.10/shelf_qr/update_shelf_3.jpg";
+
+String updateLable(String index, bool isVisible, bool isQrVisible, String name, String price){
+  String key;
+  String data;
+  if (isVisible == false)
+  {
+    data = "{\"name\":\"lable_" + index + "_name\",\"value\":\"" + "" + "\"}";
+    data += ",{\"name\":\"lable_" + index + "_price\",\"value\":\"" + "" + "\"}";
+    data += ",{\"name\":\"lable_" + index + "_qr\",\"value\":\"" + localQrTransparent + "\"}";
+    data += ",{\"name\":\"lable_" + index + "_background\",\"value\":\"" + localQrTransparent + "\"}";
+    return data;
+  }else{
+    switch (index.toInt())
+    {
+    case 1:
+      key = localQrOne;
+      break;
+    case 2:
+      key = localQrTwo;
+      break;
+    case 3:
+      key = localQrThre;
+      break;
+    default:
+      break;
+    }
+    data = "{\"name\":\"lable_" + index + "_background\",\"value\":\"" + localQrBase + "\"}";
+    data += ",{\"name\":\"lable_" + index + "_name\",\"value\":\"" + name + "\"}";
+    data += ",{\"name\":\"lable_" + index + "_price\",\"value\":\"" + price + "\"}";
+    if (isQrVisible == true){ data += ",{\"name\":\"lable_" + index + "_qr\",\"value\":\"" + key + "\"}"; }
+    return data;
+  }
+}
+//////////////
+
 String display_Price_qr(String index, bool isHide)
 { // only when lable is visible
   String data;
@@ -891,7 +944,7 @@ String display_Price_qr(String index, bool isHide)
 int newShelfConnected;
 
 void loop() {
-    incomingData=sensor.read();
+    incomingData = sensor.read();
     filtered = testFilter.filtered(incomingData);
     memcpy(dataArray, &dataArray[1], sizeof(dataArray) - sizeof(int));
     dataArray[19] = filtered/11;
@@ -951,11 +1004,14 @@ void loop() {
       if ((newShelfConnected==0) & addShelfFlag==false){                               // another shelf was added
         addShelfFlag = true;
         //updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + shelf_TwoPlusOne + "]}");
-         updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + show_Price_Lable("3") + display_Price_qr("3", false) + "]}");
+         //updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + show_Price_Lable("3") + display_Price_qr("3", false) + "]}");
+         updateShelfContent(updateLable("3",true, true, "Add new product", "0.0$"));
 
       } else if ((newShelfConnected==1) & addShelfFlag==true){                          // shelf was removed
         //updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + shelf_TwoProducts +  "," + bootle_Blank + "]}");
-         updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + hide_Price_Lable("3") + "]}");
+         //updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + hide_Price_Lable("3") + "]}");
+         updateShelfContent(updateLable("3", false, false,"",""));
+
         addShelfFlag = false;
       }
 
@@ -1029,5 +1085,20 @@ void loop() {
   // http://192.168.77.76/update_shelf_3    dbb2c128-9b16-4a4b-aa08-532dc19e0926.cnt
   // blank QR white                         28b545ed-bfe0-41bf-9185-2d544b845d6f.cnt
   // blank QR gray                          43081260-c292-47ab-9557-d9d6fd8c1fb7.cnt
+  // blank new base QR                      8e7aad81-0dbf-49a2-afcc-efa90528d346.cnt
+
+
+//   eShels structure:  shelf-base -> embeded(${shelf_change, [shelf-1-2-3, shelf-1-2, shelf-1-3, shelf-1] })
+  // shelf-1-2-3                      23902769-f6c5-43a4-aac2-86d752175952.cnt
+  // shelf-1-2                        9f7d799e-cd30-437e-aae0-d45cd7a52b3c.cnt
+  // shelf-1-3 
+  // shelf-1
+
+  // local server with files
+  //  http://192.168.77.10/shelf_qr/qr_base.png
+  //  http://192.168.77.10/shelf_qr/qr_transperent.png
+  //  http://192.168.77.10/shelf_qr/update_shelf_1.jpg
+  //  http://192.168.77.10/shelf_qr/update_shelf_2.jpg
+  //  http://192.168.77.10/shelf_qr/update_shelf_3.jpg
 
 
