@@ -227,31 +227,31 @@ const char index_html[] PROGMEM = R"rawliteral(
   </script>)rawliteral";
 
 const char when_product_scan_html[] PROGMEM = R"rawliteral(
-  <!DOCTYPE html><html lang=\"en\">
+  <!DOCTYPE html><html lang="en">
   <head> 
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <title>Title</title> 
     <style> html{ color: #333333; font-size: 18px} .container{ background: #565f60; display: flex; flex-direction: column; align-content: center; align-items: center;} 
     @media screen and (max-width: 1080px) { .wifi-credentials{flex-direction: column} .main-container{width: 60vw} } 
     </style>
   </head>
-  <body class=\"container\"> 
-    <h1 style=\"color:#ced4da\">Product was scaned!</h1>
-    <h2 style=\"color:#ced4da\">scan QR on shelf to add it</h2>
+  <body class="container"> 
+    <h1 style="color:#ced4da">Product was scaned!</h1>
+    <h2 style="color:#ced4da">scan QR on shelf to add it</h2>
   </body></html>
 )rawliteral";
 
 const char when_product_add_html[] PROGMEM = R"rawliteral(
-  <!DOCTYPE html><html lang=\"en\">
+  <!DOCTYPE html><html lang="en">
   <head> 
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <title>Title</title> 
     <style> html{ color: #333333; font-size: 18px} .container{ background: #565f60; display: flex; flex-direction: column; align-content: center; align-items: center;} 
     @media screen and (max-width: 1080px) { .wifi-credentials{flex-direction: column} .main-container{width: 60vw} } 
     </style>
   </head>
-  <body class=\"container\"> 
-    <h1 style=\"color:#ced4da\">Product added to smart shelf</h1>
+  <body class="container"> 
+    <h1 style="color:#ced4da">Product added to smart shelf</h1>
   </body></html>
 )rawliteral";
 
@@ -367,14 +367,14 @@ String wificredits(const String &var)
     }
     else
     {
-      // WiFiClient client;
-      // HTTPClient http;
-      // http.begin(client, "http://192.168.77.77:55554/event");
-      // http.addHeader("Content-Type", "application/json");
-      // http.setUserAgent("smart_shelf");
-      // int httpCode = http.POST(messageUpdate);
-      // Serial.println(httpCode);
-      // http.end();
+      WiFiClient client;
+      HTTPClient http;
+      http.begin(client, "http://192.168.77.77:55554/event");
+      http.addHeader("Content-Type", "application/json");
+      http.setUserAgent("smart_shelf");
+      int httpCode = http.POST(messageUpdate);
+      Serial.println(httpCode);
+      http.end();
     }
   }
 
@@ -382,7 +382,7 @@ String wificredits(const String &var)
     String content = "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + messageUpdate + "]}";
       WiFiClient client;
       HTTPClient http;
-      http.begin(client, "http://192.168.77.77:55554/event");
+      http.begin(client, "http://192.168.77.78:55554/event");
       http.addHeader("Content-Type", "application/json");
       http.setUserAgent("smart_shelf");
       int httpCode = http.POST(content);
@@ -801,18 +801,19 @@ int curWeight=0;
 int memWeight=1;
 int i=0;
 
-const int redLable=570;   int l_redLable=555;   int h_redLable=585;
-const int cocaCola=872;   int l_cocaCola=832;   int h_cocaCola=900;
+const int redLable=100;   int l_redLable=90;   int h_redLable=110;
+const int cocaCola=1100;   int l_cocaCola=1085;   int h_cocaCola=1130;
 const int beer=588;       int l_beer=578;       int h_beer=598;
-const int lviv_ipa=350;   int l_lviv_ipa=330;   int h_lviv_ipa=370;
-
+const int lviv_ipa=380;   int l_lviv_ipa=370;   int h_lviv_ipa=390;
+const int hankey=1165;    int l_hankey=1140;    int h_hankey=1200;
 
 
 int getProduct(int val){
   if(val > l_redLable & val < h_redLable)       {return 1;}
     else if(val > l_cocaCola & val <h_cocaCola ){return 2;}
     else if(val > l_beer & val < h_beer)        {return 3;}
-    else if(val > l_beer & val < h_beer)        {return 4;}
+    else if(val > l_lviv_ipa & val < h_lviv_ipa){return 4;}
+    else if(val > l_hankey & val < h_hankey)    {return 5;}
   else {return 0;}
 }
 
@@ -828,17 +829,25 @@ bool addShelfFlag=false;
 int counter=0;
 int deltaVal=0;
 int stableValue=0;
-int emptyShelfValue = 2730;
+int emptyShelfValue = 3400;
 bool noProducts = false;
 String eventData;
 
 const String bootle_LvivIpa = "{\"name\":\"bootle_info\",\"value\":\"749ce450-1abf-4847-97bf-99eeb5b0302c.cnt\"}";
+
 const String bootle_Grimbergen = "{\"name\":\"bootle_info\",\"value\":\"f4f5f136-3129-4692-8ad8-15b25e36bbc9.cnt\"}";
+const String bootle_Grimbergen_promo = "{\"name\":\"bootle_info\",\"value\":\"cf2ca9cf-e3fc-41d0-a035-051ddeb98e00.cnt\"}";
+
 const String bootle_RedLabel_promo = "{\"name\":\"bootle_info\",\"value\":\"e2fc08a6-f9ba-452d-b2d2-b23d93d2916c.cnt\"}";
 const String bootle_RedLabel = "{\"name\":\"bootle_info\",\"value\":\"7a126644-a0ea-486c-9726-4f891bb65f24.cnt\"}";
 
+const String bootle_Hankey_promo = "{\"name\":\"bootle_info\",\"value\":\"8f63c82e-03dd-4887-9e63-57edcf69b768.cnt\"}";
+const String bootle_Hankey = "{\"name\":\"bootle_info\",\"value\":\"ac42f295-4ee9-4ed8-9f59-263ec5a6ed02.cnt\"}";
+
 const String bootle_Cola = "{\"name\":\"bootle_info\",\"value\":\"b0de2396-2e53-40f4-a56d-ed064ea6d9a0.cnt\"}";
-const String bootle_Blank = "{\"name\":\"bootle_info\",\"value\":\"291c120a-139b-4276-97f0-ceeaa1d07946.cnt\"}";
+const String bootle_Cola_promo = "{\"name\":\"bootle_info\",\"value\":\"ae521e96-bdb5-4843-92b9-1c91ff56bc17.cnt\"}";
+
+const String bootle_Blank = "{\"name\":\"bootle_info\",\"value\":\"71f35007-c241-4c18-abf3-aa1fa47ac12c.cnt\"}";
 
 const String shelf_NoProducts = "{\"name\":\"shelf_change\",\"value\":\"7eb60178-f8c9-4bc5-87a7-69d7278e2e04.cnt\"}";
 const String shelf_TwoProducts = "{\"name\":\"shelf_change\",\"value\":\"51a7729a-af1c-434a-8e7d-07ff1f5b16cc.cnt\"}";
@@ -904,7 +913,11 @@ String updateLable(String index, bool isVisible, bool isQrVisible, String name, 
     data = "{\"name\":\"lable_" + index + "_background\",\"value\":\"" + localQrBase + "\"}";
     data += ",{\"name\":\"lable_" + index + "_name\",\"value\":\"" + name + "\"}";
     data += ",{\"name\":\"lable_" + index + "_price\",\"value\":\"" + price + "\"}";
-    if (isQrVisible == true){ data += ",{\"name\":\"lable_" + index + "_qr\",\"value\":\"" + key + "\"}"; }
+    if (isQrVisible == true){
+      data += ",{\"name\":\"lable_" + index + "_qr\",\"value\":\"" + key + "\"}"; 
+    }else{
+      data += ",{\"name\":\"lable_" + index + "_qr\",\"value\":\"" + localQrTransparent + "\"}"; 
+    }
     return data;
   }
 }
@@ -984,13 +997,16 @@ void loop() {
             updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_RedLabel_promo + "]}");
           break;
         case 2:
-            updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_Cola + "]}");
+            updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_Cola_promo + "]}");
           break;
         case 3:
-            updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_Grimbergen + "]}");
+            updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_Grimbergen_promo + "]}");
           break;
         case 4:
             updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_LvivIpa + "]}");
+          break;
+        case 5:
+            updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_Hankey_promo + "]}");
           break;
         default:
           break;
@@ -1003,24 +1019,19 @@ void loop() {
       //new shelf detection
       if ((newShelfConnected==0) & addShelfFlag==false){                               // another shelf was added
         addShelfFlag = true;
-        //updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + shelf_TwoPlusOne + "]}");
-         //updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + show_Price_Lable("3") + display_Price_qr("3", false) + "]}");
-         updateShelfContent(updateLable("3",true, true, "Add new product", "0.0$"));
-
+         updateShelfContent(updateLable("3",true, true, "Add new product", "$0.0"));
       } else if ((newShelfConnected==1) & addShelfFlag==true){                          // shelf was removed
-        //updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + shelf_TwoProducts +  "," + bootle_Blank + "]}");
-         //updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + hide_Price_Lable("3") + "]}");
          updateShelfContent(updateLable("3", false, false,"",""));
-
+         updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_Blank + "]}");
         addShelfFlag = false;
       }
 
-      // no items on shelf
+// no items on shelf
      if (stableValue > emptyShelfValue & noProducts == false){
        delay(200);
        Serial.println("+++++++++++++++++no items on shelf++++++++++++++++");
-       Serial.println("{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_Blank + "," + shelf_addProduct("1", "Add product", "$ 0.0") + display_Price_qr("1",  false) + "," +shelf_addProduct("2", "Add product", "$ 0.0") + display_Price_qr("2",  false) + "]}");
-        updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_Blank + "," + shelf_addProduct("1", "Add product", "$ 0.0") + display_Price_qr("1",  false) + "," +shelf_addProduct("2", "Add product", "$ 0.0") + display_Price_qr("2",  false) + "]}");
+        updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + bootle_Blank + "]}");
+        updateShelfContent(updateLable("1",true, true, "Add new product", "$0.0") + "," + updateLable("2",true, true, "Add new product", "$0.0"));
 
         noProducts = true;
      } else if (stableValue < emptyShelfValue & noProducts == true){
@@ -1038,17 +1049,21 @@ void loop() {
         if(shelfMessage == "product1"){prodName = "Grimbergen beer"; prodPrice = "$ 1.99"; prodDemo = bootle_Grimbergen;}
         else if(shelfMessage == "product2"){prodName = "Coca Cola 1L"; prodPrice = "$ 0.59"; prodDemo = bootle_Cola;}
         else if(shelfMessage == "product3"){prodName = "Red Lable"; prodPrice = "$ 15"; prodDemo = bootle_RedLabel;}
+        else if(shelfMessage == "have a good time!"){prodName = "HANKEY BANNISTER"; prodPrice = "$ 25"; prodDemo = bootle_Hankey;}
 
       // update shelf lable
        switch (updateShelfByIndex){
        case 1:
-          updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + shelf_addProduct("1", prodName, prodPrice) + "," + prodDemo +  display_Price_qr("1", true) + "]}");
+          updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + prodDemo + "]}");
+          updateShelfContent(updateLable("1",true, false, prodName, prodPrice));
          break;
         case 2:
-          updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + shelf_addProduct("2", prodName, prodPrice) + "," + prodDemo + display_Price_qr("2", true) + "]}");
+          updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + prodDemo + "]}");
+          updateShelfContent(updateLable("2",true, false, prodName, prodPrice));
          break; 
         case 3:
-          updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + shelf_addProduct("3", prodName, prodPrice) + "," + prodDemo + display_Price_qr("3", true) + "]}");
+          updateContent(false, "{\"eventName\":\"DYNAMIC_EVENT\",\"eventData\":[" + prodDemo + "]}");
+          updateShelfContent(updateLable("3",true, false, prodName, prodPrice));
          break;
        default:
          break;
